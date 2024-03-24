@@ -102,7 +102,7 @@ const QuizCreation = ({topicParam}: Props) => {
     }
   return (
     <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#dae9e5]  rounded-md dark:bg-[#162522] dark:border-none'>
-        <Card>
+        <Card className='dark:border-none'>
             <CardHeader>
                 <CardTitle className='text-2xl'>Quiz Creation</CardTitle>
                 <CardDescription>Choose a topic</CardDescription>
@@ -143,15 +143,15 @@ const QuizCreation = ({topicParam}: Props) => {
           )}
         />
         <div className="flex justify-between space-x-0">
-            <Button onClick={() => form.setValue('type', 'mcq')} className={`w-1/2 rounded-none rounded-l-lg ${form.getValues('type') === 'mcq' ? "bg-[#2c876a] hover:bg-[#2c876a] hover:opacity-75hover:opacity-75 text-white" : "bg-[#e2efea] hover:bg-[#e2efea] hover:opacity-75 text-black"} `} >
+            <Button onClick={() => form.setValue('type', 'mcq')} className={`w-1/2 rounded-none rounded-l-lg ${form.getValues('type') === 'mcq' ? "bg-[#2c876a] dark:bg-[#9ad0be] hover:bg-[#2c876a] hover:opacity-75hover:opacity-75 text-white" : "bg-[#e2efea] dark:bg-[#dae9e5] hover:bg-[#e2efea] hover:opacity-75 text-black"} `} >
                 <CopyCheck className='w-4 h-4 mr-2'/> Multiple Choice
             </Button>
             <Separator orientation="vertical" />
-            <Button onClick={() => form.setValue('type', 'open_ended')} className={`w-1/2  rounded-none rounded-r-lg ${form.getValues('type') === 'open_ended' ? "bg-[#2c876a] hover:bg-[#2c876a] hover:opacity-75  text-white" : "bg-[#e2efea] hover:bg-[#e2efea] text-black"}`}>
+            <Button onClick={() => form.setValue('type', 'open_ended')} className={`w-1/2  rounded-none rounded-r-lg ${form.getValues('type') === 'open_ended' ? "bg-[#2c876a] dark:bg-[#9ad0be] hho hover:bg-[#2c876a] hover:opacity-75  text-white" : "bg-[#e2efea] dark:bg-[#dae9e5] hover:bg-[#e2efea] text-black"}`}>
                 <ClipboardType className='w-4 h-4 mr-2'/> Open Ended
             </Button>
         </div>
-        <Button disabled={isPending} type="submit" className='bg-[#32856a]'>Submit</Button>
+        <Button disabled={isPending} type="submit" className='bg-[#32856a] dark:bg-[#9ad0be]'>Submit</Button>
       </form>
     </Form>
             </CardContent>

@@ -109,16 +109,16 @@ const MCQ = ({game}: Props) => {
 
   }
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-[80vw] max-w-4xl w-[90vw]">
+    <div className="absolute top-96 md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-[80vw] max-w-4xl w-[90vw]">
       <div className="flex flex-row justify-between items-center">
-        <Button
-          variant="outline"
-          size="icon"
-          className=" border-2 border-[#32856a] text-[#32856a] "
+        <Link
+        href={`/dashboard`}
+        className={cn(buttonVariants({ size: "icon", variant: "outline" }), " border-2 border-[#32856a] text-[#32856a] bg-[#dae9e5] dark:bg-[#162522] dark:text-[#9ad0be] ")}
+
         >
           <X className="h-6 w-6" />
-        </Button>
-        <h1 className="text-center text-2xl pl-24  ">{game.topic}</h1>
+        </Link>
+        <h1 className="text-center md:text-2xl md:pl-24 md:w-full w-[100px]  ">{game.topic}</h1>
 
         <MCQCounter correctAnswers={correctAnswers} wrongAnswers={wrongAnswers}/>
       </div>
@@ -127,13 +127,13 @@ const MCQ = ({game}: Props) => {
           {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
         </div>
       {/* Progress bar*/}
-      <h1 className='text-center text-3xl mt-8'>{currentQuestion.question}</h1>
+      <h1 className='text-center md:text-3xl mt-8'>{currentQuestion.question}</h1>
       <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-4">
         {options.map((option, index) => {
 
             return (
                 
-                <Button key={index} className={`w-full p-8 rounded-[20px] ${selectedChoice === index ? "bg-[#32856a] text-white" : "bg-[#cfebe2] text-black" }`}
+                <Button key={index} className={`w-full p-8 rounded-[20px] ${selectedChoice === index ? "bg-[#32856a] text-white dark:bg-[#9ad0be]  dark:text-black" : "bg-[#cfebe2] dark:bg-[#25745a] text-black dark:text-white" }`}
                 onClick={() => setSelectedChoice(index)} 
                 >
                     <div className='flex-grow flex justify-between items-center'>
@@ -150,7 +150,7 @@ const MCQ = ({game}: Props) => {
         
         
       </div>
-      <div className='flex justify-center items-center mt-5'><Button  onClick={() => handleNext()} className='mt-2 bg-[#32856a]'> {isChecking && <Loader2 className='w-4 h-4 mr-2 animate-spin'/>} Next <ChevronRight className='w-4 h-4 ml-2'/> </Button></div>
+      <div className='flex justify-center items-center mt-5 '><Button  onClick={() => handleNext()} className='mt-2 bg-[#32856a] dark:bg-[#9ad0be] '> {isChecking && <Loader2 className='w-4 h-4 mr-2 animate-spin'/>} Next <ChevronRight className='w-4 h-4 ml-2'/> </Button></div>
       
     </div>
   );

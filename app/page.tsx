@@ -26,7 +26,7 @@ export default async function Home() {
             <Button variant="outline" className="hover:bg-[#8bdac0] dark:hover:bg-[#315e4f] dark:border-[#315e4f] dark:bg-transparent px-10 py-6 bg-transparent border-[#8bdac0]">Learn More</Button>
               
           </div> 
-          <Image src={"https://media.discordapp.net/attachments/1137879400428355654/1208152218981630044/1Q6qA1c99MwAAAAASUVORK5CYII.png?ex=65e23e6f&is=65cfc96f&hm=1b323678a0b3d5c45003ae5fc16fed2874158deddd5d356f371e7b301e2b103a&=&format=webp&quality=lossless&width=760&height=578"} width={450} height={450} className="absolute bottom-0 left-8" alt="QuizPulse" />      
+          <Image src={"/illustration.png"} width={450} height={450} className="absolute bottom-0 left-8" alt="QuizPulse" />      
         </div>
         
       </div>

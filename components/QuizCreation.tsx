@@ -21,20 +21,27 @@ import { Separator } from './ui/separator'
 import {useMutation} from "@tanstack/react-query"
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-type Props = {}
+import LoadingQuestions from './LoadingQuestions'
+type Props = {
+topicParam: string
+}
+
+
 
 type Input = z.infer<typeof QuizCreationSchema>
 
-const QuizCreation = (props: Props) => {
+const QuizCreation = ({topicParam}: Props) => {
   const router = useRouter()
-  
+  const [showLoader, setshowLoader] = React.useState(false)
+  const [finished, setFinished] = React.useState(false)
   const { mutate: getQuestions, isPending } = useMutation({
     mutationFn: async ({ amount, topic, type }: Input) => {
       const response = await axios.post("/api/game", { amount, topic, type });
       return response.data;
       
-    },
-  });
+    }, 
+  },
+  );
   const form = useForm<Input>({
     
         resolver: zodResolver(QuizCreationSchema),
@@ -48,14 +55,29 @@ const QuizCreation = (props: Props) => {
     
     })
     function onSubmit (input: Input) {
+        setshowLoader(true)
         
-        getQuestions({amount: input.amount, topic: input.topic, type: input.type}), {
+        getQuestions({amount: input.amount, topic: input.topic, type: input.type}, {
         
-          onSucess: ({response}: {response: any}) => {
-              console.log(response)
+          onSuccess: (response) => {
+            setFinished(true)
+            setTimeout(() => {
+              if (input.type === "open_ended") {
+                router.push(`/play/open-ended/${response.gameId}`)}
+              else if (input.type === "mcq") {
+                router.push(`/play/mcq/${response.gameId}`)
+              }
+            
+            }, 1000)
+            
+          },
+          onError: () => {
+          
+            setshowLoader(false)
           }
+          
         
-        }
+        })
 
         
         
@@ -72,6 +94,11 @@ const QuizCreation = (props: Props) => {
           }
         }*/}
     
+    }
+    form.watch();
+    if (showLoader) {
+      
+      return <LoadingQuestions finished={finished} />
     }
   return (
     <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#dae9e5]  rounded-md dark:bg-[#162522] dark:border-none'>

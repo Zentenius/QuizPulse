@@ -10,15 +10,19 @@ export const metadata = {
 
 }
 
-type Props = {}
+type Props = {
+    searchParams:{
+        topic?:string
+    }
+}
 
-const QuizPage = async (props: Props) => {
+const QuizPage = async ({searchParams}: Props) => {
     const session = await getAuthSession()
     if (!session?.user) {
         return redirect("/")
     }
     return (
-    <QuizCreation/>
+    <QuizCreation topicParam={searchParams.topic ?? ""}/>
   )
 }
 

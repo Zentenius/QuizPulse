@@ -42,11 +42,6 @@ const UserAccountNav = ({ user }: Props) => {
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/">I'm cooked</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
 
         <DropdownMenuItem
           onSelect={(event) => {

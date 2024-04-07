@@ -41,11 +41,11 @@ const Dashboard = async (props: Props) => {
             <Bug className="w-5 h-5 ml-1" />
         </span>
       </DialogTrigger>
-            <DialogContent className='bg-[#ecf3f1]'>
+            <DialogContent className='bg-[#ecf3f1] dark:bg-[#111c19] dark:border-none '>
                 <DialogHeader>
                 <DialogTitle className=''>Notice</DialogTitle>
                 <DialogDescription className='text-sm text-gray-600'>
-                This website is currently still underdevlopment so bugs are to be expected
+                This website is currently still under devlopment so bugs are to be expected
                 </DialogDescription>
                 </DialogHeader>
                 <div className='ml-4'>

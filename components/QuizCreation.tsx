@@ -48,7 +48,7 @@ const QuizCreation = ({topicParam}: Props) => {
         defaultValues: {
             
             amount: 3,
-            topic: "",
+            topic: topicParam,
             type: "open_ended"
         
         }
@@ -119,7 +119,7 @@ const QuizCreation = ({topicParam}: Props) => {
               <FormControl>
                 <Input placeholder="Enter a topic" {...field} />
               </FormControl>
-              <FormDescription>
+              <FormDescription className=''>
                Please provide a topic for your quiz.
               </FormDescription>
               <FormMessage />

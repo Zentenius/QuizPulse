@@ -28,66 +28,85 @@ const MCQ = ({game}: Props) => {
     const {toast} = useToast(
       )
     const [now, setNow] = React.useState(new Date())
-    React.useEffect(() => {
-      const interval = setInterval(() => {
-        if (!hasEnded) {
-          setNow(new Date());
-        }
-      }, 1000);
-      return () => clearInterval(interval);
-    }, [hasEnded]);
-    const currentQuestion = React.useMemo(() => {
-        return game.questions[questionIndex]
-    }, [questionIndex, game.questions])
-    const {mutate: checkAnswer, isPending: isChecking} = useMutation({
     
-      mutationFn: async () => {
-        const payload: z.infer<typeof checkAnswerSchema> = {
-        
-          questionId: currentQuestion.id,
-          userAnswer: options[selectedChoice]
-        
-        }
-        const response = await axios.post('/api/checkAnswer', payload)
-        return response.data
-      }
+// Update time every second if quiz not ended
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    if (!hasEnded) {
+      setNow(new Date());
+    }
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [hasEnded]);
+
+// Get current question based on index
+const currentQuestion = React.useMemo(() => {
+  return game.questions[questionIndex]
+}, [questionIndex, game.questions])
+
+// Mutation to check answer via API
+const {mutate: checkAnswer, isPending: isChecking} = useMutation({
+
+  mutationFn: async () => {
+    // Send question ID and selected choice
+    const payload: z.infer<typeof checkAnswerSchema> = {    
+      questionId: currentQuestion.id,
+      userAnswer: options[selectedChoice]  
+    }
+
+    // Make API request
+    const response = await axios.post('/api/checkAnswer', payload)
+    return response.data
+  }
+
+})
+
+// Handle next question click
+const handleNext = useCallback(() => {
+  if (isChecking) return
   
-  })
-  const handleNext = useCallback(() =>{
-    if (isChecking) return
+  // Call mutation
   checkAnswer(undefined, {
-    
+
     onSuccess: ({isCorrect}) => {
       
+      // Show toast based on if correct
       if (isCorrect) {
         toast({
           title: "Correct",
           variant: "success"
         })
-        setCorrectAnswers((prev) => prev + 1)
+        setCorrectAnswers(prev => prev + 1) 
       } else {
         toast({
           title: "Wrong",
           variant: "destructive"
         })
-        setWrongAnswers((prev) => prev + 1)
+        setWrongAnswers(prev => prev + 1)
       }
-      if (questionIndex === game.questions.length - 1) {
-      
+
+      // Check if last question
+      if (questionIndex === game.questions.length - 1) {        
         setHasEnded(true)
         return;
       }
-      setQuestionIndex((prev) => prev + 1)
+
+      // Go to next question
+      setQuestionIndex(prev => prev + 1)
 
     }
 
   })
-  }, [checkAnswer, toast, isChecking, questionIndex, game.questions.length])
-    const options = React.useMemo(() => {
-        if (!currentQuestion) return []
-        if (!currentQuestion.options) return []
-        return JSON.parse(currentQuestion.options as string) as string[];
-    }, [currentQuestion])
+}, [checkAnswer, toast, isChecking, questionIndex, game.questions.length])
+
+// Get options for current question
+const options = React.useMemo(() => {
+  if (!currentQuestion) return []
+  if (!currentQuestion.options) return []
+  
+  return JSON.parse(currentQuestion.options as string) as string[];
+}, [currentQuestion])
   if (hasEnded) {
   
     return (
